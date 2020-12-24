@@ -21,7 +21,7 @@ public class LogFileProcessor {
     private static final Logger logger = LoggerFactory.getLogger(LogFileProcessor.class);
 
     public static void main(String[] args) throws IOException {
-        logger.info("LogFileProcessor is started: " + LocalDateTime.now());
+        logger.debug("LogFileProcessor is started: " + LocalDateTime.now());
         Path logFilePath = FileUtils.getPath(args);
         DatabaseUtils.initDatabase();
         Map<String, LogEvent> eventMap = new HashMap<>();
@@ -32,11 +32,11 @@ public class LogFileProcessor {
             logger.warn("No log events found in log file. Nothing is persisted.");
         }
         DatabaseUtils.printLogEventSummary();
-        logger.info("LogFileProcessor is completed: " + LocalDateTime.now());
+        logger.debug("LogFileProcessor is completed: " + LocalDateTime.now());
     }
 
     private static void processLogFile(Path logFilePath, Map<String, LogEvent> eventMap) throws IOException {
-        try (Stream<String> stream = Files.lines(logFilePath).parallel()) {
+        try (Stream<String> stream = Files.lines(logFilePath)) {
             ObjectMapper mapper = new ObjectMapper();
             stream.forEach(s -> {
                 try {
@@ -60,14 +60,13 @@ public class LogFileProcessor {
             return;
         }
         int eventDuration = Math.toIntExact(Math.abs(storedInMapEvent.getEventTimestamp() - event.getEventTimestamp()));
-        logger.info("eventId " + event.getEventId() + " ; eventDuration = " + eventDuration);
+        logger.debug("eventId " + event.getEventId() + " ; eventDuration = " + eventDuration);
         storedInMapEvent.setEventDuration(eventDuration);
         if (eventDuration > 4) {
             storedInMapEvent.setAlertFlag(Boolean.TRUE);
         } else {
             storedInMapEvent.setAlertFlag(Boolean.FALSE);
         }
-        //       saveEvent(storedInMapEvent);
     }
 
 }

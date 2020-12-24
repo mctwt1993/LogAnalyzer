@@ -10,11 +10,6 @@ public class DatabaseUtilsTest {
     }
 
     @Test
-    public void saveRecord() {
-        // Assert.assertNull(new Integer(3));
-    }
-
-    @Test
     public void populateDatabase() {
     }
 

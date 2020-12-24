@@ -1,0 +1,6 @@
+/build/
+/database/testDB.tmp/
+/database/testDB.lck
+/database/testDB.log
+/database/testDB.properties
+/database/testDB.script

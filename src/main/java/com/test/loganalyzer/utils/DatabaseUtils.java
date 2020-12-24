@@ -33,22 +33,13 @@ public class DatabaseUtils {
                     + "type VARCHAR(255), "
                     + "host VARCHAR(255), "
                     + "alert BOOLEAN DEFAULT FALSE)");
-            logger.info("Database is initialized, LogEvent is created.");
+            logger.debug("Database is initialized, LogEvent is created.");
 
         } catch (SQLException exception) {
             printSQLException(exception);
         }
 
     }
-
-    public static void saveRecord(LogEvent event) {
-        try (Connection conn = getConnection()) {
-            run(conn, printLogInsertQuery(event));
-        } catch (SQLException exception) {
-            printSQLException(exception);
-        }
-    }
-
 
     public static void populateDatabase(Map<String, LogEvent> insertRecords) {
         try (Connection conn = getConnection()) {
