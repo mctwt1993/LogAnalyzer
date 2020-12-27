@@ -14,7 +14,7 @@ public class DatabaseUtils {
     private static final String JDBC_USERNAME = "SA";
     private static final String JDBC_PASSWORD = "";
 
-    private static Connection getConnection() {
+    public static Connection getConnection() {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
@@ -61,7 +61,7 @@ public class DatabaseUtils {
         }
     }
 
-    public static Integer getCount(Connection conn, String sql) throws SQLException {
+    private static Integer getCount(Connection conn, String sql) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             rs.next();
